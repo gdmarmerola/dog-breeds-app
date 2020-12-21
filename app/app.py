@@ -72,7 +72,7 @@ nn.fit(supervised_transform(X))
 del X
 gc.collect()
 
-uploaded_file = st.file_uploader("Choose an image from your computer...", type=["jpg","jpeg"])
+uploaded_file = st.file_uploader("Choose an image from your computer or cellphone...", type=["jpg","jpeg"])
 
 if uploaded_file is not None:
     

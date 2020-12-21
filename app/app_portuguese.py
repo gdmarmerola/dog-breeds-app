@@ -2,6 +2,7 @@
 import os
 import numpy as np
 import pandas as pd
+import dask.dataframe as dd
 import matplotlib.pyplot as plt
 from joblib import dump, load
 
@@ -28,7 +29,7 @@ import streamlit as st
 
 ## reading data and artifacts ##
 
-@st.cache(allow_output_mutation=True)
+@st.cache
 def load_data():
 
     # metadata
@@ -52,11 +53,7 @@ def load_data():
     # defining design matrix
     X = features_df.copy().values
 
-    # building nearest neighbor model
-    nn = NearestNeighbors(n_neighbors=50)
-    nn.fit(supervised_transform(X))
-
-    return meta_df, extractor, supervised_transform, nn
+    return meta_df, extractor, supervised_transform, X
 
 ## collecting picture from user and scoring ##
 
@@ -70,7 +67,11 @@ st.write(
 )
 st.write("")
 
-meta_df, extractor, supervised_transform, nn = load_data()
+meta_df, extractor, supervised_transform, X = load_data()
+
+# building nearest neighbor model
+nn = NearestNeighbors(n_neighbors=50, algorithm='brute')
+nn.fit(supervised_transform(X))
 
 uploaded_file = st.file_uploader("Escolha uma imagem no seu computador...", type="jpg")
 

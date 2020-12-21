@@ -110,7 +110,7 @@ if uploaded_file is not None:
     for i, path in enumerate(comps_fig_path):
         plt.subplot(10, 5, i+1)
         plt.imshow(plt.imread(path))
-        plt.title(comps_breed.iloc[i], fontsize=10)
+        plt.title(comps_breed.iloc[i], fontsize=9)
         plt.grid(b=None)
         plt.xticks([]); plt.yticks([])
     

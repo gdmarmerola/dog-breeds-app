@@ -1,4 +1,5 @@
 # basic imports
+import gc
 import os
 import numpy as np
 import pandas as pd
@@ -47,10 +48,7 @@ def load_data():
         features_df = pd.concat([features_df, temp_df])
     features_df = features_df.sort_index()
 
-    # defining design matrix
-    X = features_df.copy().values
-
-    return meta_df, extractor, supervised_transform, X
+    return meta_df, extractor, supervised_transform, features_df
 
 ## collecting picture from user and scoring ##
 
@@ -69,6 +67,10 @@ meta_df, extractor, supervised_transform, X = load_data()
 # building nearest neighbor model
 nn = NearestNeighbors(n_neighbors=30, algorithm='brute')
 nn.fit(supervised_transform(X))
+
+# freeing memory for x
+del X
+gc.collect()
 
 uploaded_file = st.file_uploader("Escolha uma imagem no seu computador...", type="jpg")
 

@@ -57,7 +57,7 @@ def load_data():
 
 ## collecting picture from user and scoring ##
 
-st.title('Dog Breed Identifier')
+st.title('Qual é a raça do meu dog?')
 st.write(
     'Esse aplicativo usa os dados do [Stanford Dogs Dataset](http://vision.stanford.edu/aditya86/ImageNetDogs/) '
     'e *deep learning* para identificar a raça de cães usando imagens. '

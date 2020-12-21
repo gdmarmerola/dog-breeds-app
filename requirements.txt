@@ -1,9 +1,9 @@
-matplotlib==3.2.2
-streamlit==0.73.0
+joblib==0.16.0
+tensorflow==2.4.0
 pandas==1.0.5
 tqdm==4.47.0
-tensorflow==2.4.0
-joblib==0.16.0
+matplotlib==3.2.2
 numpy==1.19.4
-ipython==7.19.0
+streamlit==0.73.0
 scikit_learn==0.23.2
+tables==3.6.1

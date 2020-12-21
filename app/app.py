@@ -60,7 +60,7 @@ def load_data():
 st.title("What's my dog's breed?")
 st.write(
     'This app makes use of the [Stanford Dogs Dataset](http://vision.stanford.edu/aditya86/ImageNetDogs/) '
-    'and deep learning to identify dog breeds using images. '
+    "and deep learning to **identify your dog's breed**. "
     "Just send your friend's picture and the algorithm will search for "
     '50 comparable dogs, returning their breeds. '
     'For more insight into the methodology refer to [this article](https://gdmarmerola.github.io/discovering-breed-with-ml/).'

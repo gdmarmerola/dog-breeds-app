@@ -23,9 +23,6 @@ from core import (
 # streamlit
 import streamlit as st
 
-# page configs
-#st.set_page_config(layout="wide")
-
 ## reading data and artifacts ##
 
 @st.cache
@@ -62,7 +59,7 @@ st.write(
     'This app makes use of the [Stanford Dogs Dataset](http://vision.stanford.edu/aditya86/ImageNetDogs/) '
     "and deep learning to **identify your dog's breed**. "
     "Just send your friend's picture and the algorithm will search for "
-    '50 comparable dogs, returning their breeds. '
+    '30 comparable dogs, returning their breeds. '
     'For more insight into the methodology refer to [this article](https://gdmarmerola.github.io/discovering-breed-with-ml/).'
 )
 st.write("")
@@ -70,7 +67,7 @@ st.write("")
 meta_df, extractor, supervised_transform, X = load_data()
 
 # building nearest neighbor model
-nn = NearestNeighbors(n_neighbors=50, algorithm='brute')
+nn = NearestNeighbors(n_neighbors=30, algorithm='brute')
 nn.fit(supervised_transform(X))
 
 uploaded_file = st.file_uploader("Choose an image from your computer...", type="jpg")
@@ -97,7 +94,7 @@ if uploaded_file is not None:
     )
 
     st.write(f"Your dog's most likely breed is **{breed_counts.index[0]}**.")
-    st.write('Breed counts among 50 comparable dogs (top 10):')
+    st.write('Breed counts among 30 comparable dogs (top 10):')
     st.write(breed_counts.head(10))
 
     # comps
@@ -108,7 +105,7 @@ if uploaded_file is not None:
 
     # loop for all figures
     for i, path in enumerate(comps_fig_path):
-        plt.subplot(10, 5, i+1)
+        plt.subplot(10, 3, i+1)
         plt.imshow(plt.imread(path))
         plt.title(comps_breed.iloc[i], fontsize=9)
         plt.grid(b=None)

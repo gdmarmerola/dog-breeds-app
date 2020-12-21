@@ -23,9 +23,6 @@ from core import (
 # streamlit
 import streamlit as st
 
-# page configs
-#st.set_page_config(layout="wide")
-
 ## reading data and artifacts ##
 
 @st.cache
@@ -61,7 +58,7 @@ st.title('Qual é a raça do meu dog?')
 st.write(
     'Esse aplicativo usa os dados do [Stanford Dogs Dataset](http://vision.stanford.edu/aditya86/ImageNetDogs/) '
     'e *deep learning* para **identificar a raça do seu dog**. '
-    "É só enviar a foto do seu amigo e o algoritmo vai buscar 50 "
+    "É só enviar a foto do seu amigo e o algoritmo vai buscar 30 "
     'cães comparáveis na base, retornando as raças deles. '
     'Mais detalhes sobre a metodologia [neste artigo](https://gdmarmerola.github.io/discovering-breed-with-ml/).'
 )
@@ -70,7 +67,7 @@ st.write("")
 meta_df, extractor, supervised_transform, X = load_data()
 
 # building nearest neighbor model
-nn = NearestNeighbors(n_neighbors=50, algorithm='brute')
+nn = NearestNeighbors(n_neighbors=30, algorithm='brute')
 nn.fit(supervised_transform(X))
 
 uploaded_file = st.file_uploader("Escolha uma imagem no seu computador...", type="jpg")
@@ -97,7 +94,7 @@ if uploaded_file is not None:
     )
 
     st.write(f"A raça mais provável do seu cão é **{breed_counts.index[0]}**.")
-    st.write('Contagem das raças entre 50 cães comparáveis (top 10):')
+    st.write('Contagem das raças entre 30 cães comparáveis (top 10):')
     st.write(breed_counts.head(10))
 
     # comps
@@ -108,7 +105,7 @@ if uploaded_file is not None:
 
     # loop for all figures
     for i, path in enumerate(comps_fig_path):
-        plt.subplot(10, 5, i+1)
+        plt.subplot(10, 3, i+1)
         plt.imshow(plt.imread(path))
         plt.title(comps_breed.iloc[i], fontsize=9)
         plt.grid(b=None)

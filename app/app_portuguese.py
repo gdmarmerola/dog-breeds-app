@@ -46,8 +46,9 @@ def load_data():
     # reading features in chunks
     features_df = pd.DataFrame()
     for f in list(os.walk('data/features'))[0][2]:
-        temp_df = pd.read_csv(f'data/features/{f}', index_col='pet_id')
+        temp_df = pd.read_hdf(f'data/features/{f}',  index_col='pet_id')
         features_df = pd.concat([features_df, temp_df])
+    features_df = features_df.sort_index()
 
     # defining design matrix
     X = features_df.copy().values

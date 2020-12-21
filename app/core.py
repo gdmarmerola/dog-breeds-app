@@ -47,6 +47,11 @@ def chunks(lst, n):
     for i in range(0, len(lst), n):
         yield lst[i:i + n]
 
+def chunks_df(lst, n):
+    """Yield successive n-sized chunks from lst."""
+    for i in range(0, len(lst), n):
+        yield lst.iloc[i:i + n]
+
 # function to read all images into array
 def read_images(pet_ids, target_width=224, target_height=224):
     
@@ -90,3 +95,4 @@ def extract_features(pet_ids, extractor):
 
     # saving df
     return features_df
+

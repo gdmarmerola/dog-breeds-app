@@ -1,4 +1,5 @@
 # basic imports
+import os
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -8,6 +9,7 @@ from joblib import dump, load
 from sklearn.pipeline import Pipeline
 from sklearn.decomposition import PCA
 from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import NearestNeighbors
 
 # using a pre-trained net from tf
 from tensorflow.keras.applications.xception import Xception
@@ -26,22 +28,35 @@ import streamlit as st
 
 ## reading data and artifacts ##
 
-# metadata
-meta_df = pd.read_csv('data/metadata.csv', index_col='pet_id')
+@st.cache(allow_output_mutation=True)
+def load_data():
 
-# instance of feature extractor
-extractor = Xception(include_top=False, pooling='avg')
+    # metadata
+    meta_df = pd.read_csv('data/metadata.csv', index_col='pet_id')
 
-# nearest neighbor index
-nn = load('data/nn.compressed')
+    # instance of feature extractor
+    extractor = Xception(include_top=False, pooling='avg')
 
-# supervised transform
-coef = load('data/coef.compressed')
-pca = load('data/pca.compressed')
-def supervised_transform(x):
-    return np.abs(coef).sum(axis=0) * pca.transform(x)
+    # supervised transform
+    coef = load('data/coef.compressed')
+    pca = load('data/pca.compressed')
+    def supervised_transform(x):
+        return np.abs(coef).sum(axis=0) * pca.transform(x)
 
+    # reading features in chunks
+    features_df = pd.DataFrame()
+    for f in list(os.walk('data/features'))[0][2]:
+        temp_df = pd.read_csv(f'data/features/{f}', index_col='pet_id')
+        features_df = pd.concat([features_df, temp_df])
 
+    # defining design matrix
+    X = features_df.copy().values
+
+    # building nearest neighbor model
+    nn = NearestNeighbors(n_neighbors=50)
+    nn.fit(supervised_transform(X))
+
+    return meta_df, extractor, supervised_transform, nn
 
 ## collecting picture from user and scoring ##
 
@@ -54,6 +69,8 @@ st.write(
     'For more insight into the methodology refer to [this article](https://gdmarmerola.github.io/discovering-breed-with-ml/).'
 )
 st.write("")
+
+meta_df, extractor, supervised_transform, nn = load_data()
 
 uploaded_file = st.file_uploader("Choose an image from your computer...", type="jpg")
 

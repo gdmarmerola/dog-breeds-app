@@ -101,7 +101,7 @@ if uploaded_file is not None:
     comps_fig_path = meta_df.index[nns[1][0]].values
 
     # opening matplotlib figure
-    fig = plt.figure(figsize=(10, 20), dpi=150)
+    fig = plt.figure(figsize=(6, 20), dpi=200)
 
     # loop for all figures
     for i, path in enumerate(comps_fig_path):

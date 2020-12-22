@@ -77,7 +77,7 @@ uploaded_file = st.file_uploader("Choose an image from your computer or cellphon
 if uploaded_file is not None:
     
     image = plt.imread(uploaded_file)
-    st.image(image, caption='Uploaded image.', width=350)
+    st.image(image, caption='Uploaded image.', width=300)
     
     # features from zeca
     features = extract_features([uploaded_file], extractor)

@@ -42,13 +42,13 @@ def load_data():
         return np.abs(coef).sum(axis=0) * pca.transform(x)
 
     # reading features in chunks
-    features_df = pd.DataFrame()
+    X_transformed = pd.DataFrame()
     for f in list(os.walk('data/features'))[0][2]:
-        temp_df = pd.read_hdf(f'data/features/{f}',  index_col='pet_id')
-        features_df = pd.concat([features_df, temp_df])
-    features_df = features_df.sort_index()
+        temp_df = pd.read_hdf(f'data/features/{f}',  index_col='index')
+        X_transformed = pd.concat([X_transformed, temp_df])
+    X_transformed = X_transformed.sort_index()
 
-    return meta_df, extractor, supervised_transform, features_df
+    return meta_df, extractor, supervised_transform, X_transformed
 
 ## collecting picture from user and scoring ##
 
@@ -57,19 +57,19 @@ st.write(
     'Esse aplicativo usa os dados do [Stanford Dogs Dataset](http://vision.stanford.edu/aditya86/ImageNetDogs/) '
     'e *deep learning* para **identificar a raça do seu dog**. '
     "É só enviar a foto do seu amigo e o algoritmo vai buscar 30 "
-    'cães comparáveis na base, retornando as raças deles. '
+    'cães parecidos na base, retornando as raças deles. '
     'Mais detalhes sobre a metodologia [neste artigo](https://gdmarmerola.github.io/discovering-breed-with-ml/).'
 )
 st.write("")
 
-meta_df, extractor, supervised_transform, X = load_data()
+meta_df, extractor, supervised_transform, X_transformed = load_data()
 
 # building nearest neighbor model
 nn = NearestNeighbors(n_neighbors=30, algorithm='brute')
-nn.fit(supervised_transform(X))
+nn.fit(X_transformed)
 
-# freeing memory for x
-del X
+# freeing memory
+del X_transformed
 gc.collect()
 
 uploaded_file = st.file_uploader("Escolha uma imagem no seu computador ou celular...", type=["jpg","jpeg"])

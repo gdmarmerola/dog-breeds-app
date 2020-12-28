@@ -1,6 +1,7 @@
 # basic imports
 import gc
 import os
+import time
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -26,7 +27,7 @@ import streamlit as st
 
 ## reading data and artifacts ##
 
-@st.cache
+@st.cache(show_spinner=False)
 def load_data():
 
     # metadata
@@ -79,41 +80,45 @@ if uploaded_file is not None:
     image = plt.imread(uploaded_file)
     st.image(image, caption='Uploaded image.', width=300)
     
-    # features from zeca
-    features = extract_features([uploaded_file], extractor)
+    with st.spinner('Running...'):
 
-    # querying zeca NNs
-    nns = nn.kneighbors(supervised_transform(features))
+        # features from zeca
+        features = extract_features([uploaded_file], extractor)
 
-    # breeds of comparable dogs
-    comps_breed = meta_df.iloc[nns[1][0]]['breed']
-    breed_counts = (
-        comps_breed
-        .value_counts()
-        .to_frame()
-        .rename(columns={'breed':'count'})
-        .assign(percentage=lambda x: [str(int(e)) + '%' for e in (x/x.sum() * 100).values])
-    )
+        # querying zeca NNs
+        nns = nn.kneighbors(supervised_transform(features))
 
-    st.write(f"Your dog's most likely breed is **{breed_counts.index[0]}**.")
-    st.write('Breed counts among 30 comparable dogs (top 10):')
-    st.write(breed_counts.head(10))
+        # breeds of comparable dogs
+        comps_breed = meta_df.iloc[nns[1][0]]['breed']
+        breed_counts = (
+            comps_breed
+            .value_counts()
+            .to_frame()
+            .rename(columns={'breed':'count'})
+            .assign(percentage=lambda x: [str(int(e)) + '%' for e in (x/x.sum() * 100).values])
+        )
 
-    # comps
-    comps_fig_path = meta_df.index[nns[1][0]].values
+        # comps
+        comps_fig_path = meta_df.index[nns[1][0]].values
 
-    # opening matplotlib figure
-    fig = plt.figure(figsize=(6, 20), dpi=100)
+        # opening matplotlib figure
+        fig = plt.figure(figsize=(6, 20), dpi=100)
 
-    # loop for all figures
-    for i, path in enumerate(comps_fig_path):
-        plt.subplot(10, 3, i+1)
-        plt.imshow(plt.imread(path))
-        plt.title(comps_breed.iloc[i], fontsize=9)
-        plt.grid(b=None)
-        plt.xticks([]); plt.yticks([])
+        # loop for all figures
+        for i, path in enumerate(comps_fig_path):
+            plt.subplot(10, 3, i+1)
+            plt.imshow(plt.imread(path))
+            plt.title(comps_breed.iloc[i], fontsize=9)
+            plt.grid(b=None)
+            plt.xticks([]); plt.yticks([])
+
+        time.sleep(3)
     
-    st.write('Comparable dogs:')
+    st.success('Done!')
+    st.write(f"Your dog's most likely breed is **{breed_counts.index[0]}**.")
+    st.write('Breed counts among 30 similar dogs (top 10):')
+    st.write(breed_counts.head(10))
+    st.write('Similar dogs:')
     st.write(fig)
     
 

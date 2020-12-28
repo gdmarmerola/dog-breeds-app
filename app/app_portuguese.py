@@ -55,10 +55,10 @@ def load_data():
 
 st.title('Qual é a raça do meu dog?')
 st.write(
-    'Esse aplicativo usa os dados do [Stanford Dogs Dataset](http://vision.stanford.edu/aditya86/ImageNetDogs/) '
+    'Esse aplicativo usa imagens de mais de 20 mil cães disponíveis no [Stanford Dogs Dataset](http://vision.stanford.edu/aditya86/ImageNetDogs/) '
     'e *deep learning* para **identificar a raça do seu dog**. '
-    "É só enviar a foto do seu amigo e o algoritmo vai buscar 30 "
-    'cães parecidos na base, retornando as raças deles. '
+    "É só enviar a foto do seu amigo e o algoritmo vai procurar 30 "
+    'dogs parecidos na base, retornando as raças deles. '
     'Mais detalhes sobre a metodologia [neste artigo](https://gdmarmerola.github.io/discovering-breed-with-ml/).'
 )
 st.write("")

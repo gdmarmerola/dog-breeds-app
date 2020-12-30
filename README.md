@@ -3,8 +3,8 @@
 This is a simple [Streamlit](https://www.streamlit.io/) app that predicts a dog's breed by searching the [Stanford Dogs Dataset](http://vision.stanford.edu/aditya86/ImageNetDogs/) for similar dogs. It is inspired by the ideas from [this blog post](https://gdmarmerola.github.io/discovering-breed-with-ml/) I wrote.
 
 ### Try it for yourself!
-* [**English version**]()
-* [**Portuguese version**]()
+* [**English version**](https://share.streamlit.io/gdmarmerola/dog-breeds-app/app/app.py)
+* [**Portuguese version**](https://share.streamlit.io/gdmarmerola/dog-breeds-app/app/app_portuguese.py)
 
 ![](app-example-readme.png)
 

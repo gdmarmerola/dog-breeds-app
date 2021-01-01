@@ -114,7 +114,10 @@ if uploaded_file is not None:
 
         time.sleep(3)
     
-    st.success('Done!')
+    if nns[0].mean() > 115:
+        st.error("""Model with low confidence. Sure there's a dog in the image?""")
+    else:
+        st.success('Done!')
     st.write(f"Your dog's most likely breed is **{breed_counts.index[0]}**.")
     st.write('Breed counts among 30 similar dogs (top 10):')
     st.write(breed_counts.head(10))

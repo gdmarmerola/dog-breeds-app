@@ -26,7 +26,7 @@ Training is done in the [`dog_breeds_train.ipynb`](https://github.com/gdmarmerol
 
 4. Scale features using Logistic Regression weights. We perform a "supervised transform" of the features, by doing `abs(weights) * features`. By doing this, unimportant features for predicting breed will have lower magnitude than important features. This implies that when using euclidean distance two images will mostly be compared by important features, as they will dominate the similarity metric. This works like a "custom kernel" for predicting breed.
 
-5. Train a kNN model on the supervised feature space. As we "specialized" our feature space so distances are proportional to what features are important for predicting breed, a kNN model works like a charm, with accuracy comparable to the Logistic Regression.
+5. Train a kNN model on the supervised feature space. As we "specialized" our feature space so distances are proportional to the features important for predicting breed, a kNN model works like a charm, with accuracy comparable to the Logistic Regression.
 
 6. Save artifacts. We save metadata, the kNN model and the "custom kernel" we built. We perform some tricks to avoid passing the 100MB GitHub file size limit and making the app load fast.
 

@@ -10,7 +10,7 @@ This is a simple [Streamlit](https://www.streamlit.io/) app that predicts a dog'
 
 ### How does it work?
 
-The pipeline works by applying a bit of ***supervision*** to the feature space produced by the Xception network (pre-trained on ImageNet), producing an embedding where ***distance represents similarity in terms of dog breed***. With this specialized embedding, a 30-Nearest Neighbor model is trained, achieving comparable accuracy to a linear model trained on the original space (simple transfer learning). However, the kNN model can be much more ***interpretable and useful*** to the user as she can inspect the dog images used for the prediction.
+The pipeline works by applying a bit of ***supervision*** to the feature space produced by the Xception network (pre-trained on ImageNet), producing an embedding where ***distance represents (dis)similarity in terms of dog breed***. With this specialized embedding, a 30-Nearest Neighbor model is trained, achieving comparable accuracy to a linear model trained on the original space (simple transfer learning). However, the kNN model can be much more ***interpretable and useful*** to the user as she can inspect the dog images used for the prediction.
 
 We outline training and serving steps below.
 

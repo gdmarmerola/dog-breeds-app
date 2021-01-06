@@ -4,7 +4,7 @@ This is a simple [Streamlit](https://www.streamlit.io/) app that predicts a dog'
 
 ### Try it for yourself!
 * [**English version**](https://share.streamlit.io/gdmarmerola/dog-breeds-app/app/app.py)
-* [**Portuguese version**](https://share.streamlit.io/gdmarmerola/dog-breeds-app/app/app_portuguese.py)
+* [**Portuguese version**](https://share.streamlit.io/gdmarmerola/dog-breeds-app/app/app_portuguese_copy.py)
 
 ![](app-example-readme.png)
 
